@@ -4,7 +4,8 @@ import * as Yup from "yup";
 
 import css from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { initialValues, addContact } from "../../redux/contactsSlice";
+import { initialValues } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string()
@@ -12,7 +13,7 @@ const FeedbackSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   number: Yup.string()
-    .matches(/^\d{3}-\d{2}-\d{2}$/, "Invalid phone number format")
+    .matches(/^\d{3}-\d{3}-\d{4}$/, "Invalid phone number format")
     .required("Required"),
 });
 
@@ -63,12 +64,12 @@ const ContactForm = () => {
           <div className={css.thumb}>
             <Field
               className={`${css.formInput} ${
-                errors.number && touched.number && css.errorNumber
+                errors.phone && touched.phone && css.errorNumber
               }`}
               type="text"
               name="number"
               id={numberId}
-              placeholder="xxx-xx-xx"
+              placeholder="xxx-xxx-xxxx"
             />
           </div>
           <ErrorMessage
